@@ -1,5 +1,5 @@
 // Модуль для создания объекта из массива данных
-import {getRandomIntegerInclusive, getRandomItemNoRepeat, getRandomArray, getRandomFloat} from './random.js';
+import {getRandomIntegerInclusive, getRandomItemNoRepeat, getRandomArray, getRandomFloat} from './utils.js';
 
 //Создаем массивы для создания объекта
 const OFFER_TYPES = ['palace', 'flat', 'house', 'bungalow'];
