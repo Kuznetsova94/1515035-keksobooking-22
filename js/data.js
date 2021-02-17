@@ -55,3 +55,5 @@ const advertisementArray = new Array(OBJECT_NUMBER).fill(null).map(() => createO
 
 // eslint-disable-next-line no-console
 console.log(advertisementArray);
+
+export {advertisementArray};
