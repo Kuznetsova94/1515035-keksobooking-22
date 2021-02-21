@@ -2,6 +2,15 @@
 // Ограничения по длине заголовка
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+// Ограничения по цене за ночь
+const MAX_PRICE = 1000000;
+// Ограничения минимальной цены по типу жилья
+const MIN_TYPE_PRICES = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
 
 // Валидация заголовка
 const titleInput = document.querySelector('#title');
@@ -18,9 +27,6 @@ titleInput.addEventListener('input', () => {
   }
   titleInput.reportValidity();
 });
-
-// Ограничения по цене за ночь
-const MAX_PRICE = 1000000;
 
 // Валидация цены за ночь
 const priceInput = document.querySelector('#price');
@@ -48,21 +54,13 @@ titleInput.addEventListener('input', () => {
   titleInput.reportValidity();
 });
 
-// Ограничения минимальной цены по типу жилья
-const MinTypePrices = {
-  bungalow: 0,
-  flat: 1000,
-  house: 5000,
-  palace: 10000,
-};
-
 // При изменении типа размещения/жилья автоматически меняется цена
 const flatTypeInput = document.querySelector('#type');
 const priceTypeInput = document.querySelector('#price');
 // По умолчанию выбрана квартира, меняем минимальную цену на 1000
 priceTypeInput.placeholder = 1000;
 flatTypeInput.addEventListener('change', () => {
-  priceTypeInput.placeholder = MinTypePrices[flatTypeInput.value];
+  priceTypeInput.placeholder = MIN_TYPE_PRICES[flatTypeInput.value];
 });
 
 // Синхранизация по времени
@@ -74,4 +72,3 @@ checkinTypeInput.addEventListener('change', () => {
 checkoutTypeInput.addEventListener('change', () => {
   checkinTypeInput.value = checkoutTypeInput.value;
 });
-

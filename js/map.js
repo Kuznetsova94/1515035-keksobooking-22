@@ -9,22 +9,23 @@ import {
   setActiveMapFilters
 } from './inactive-form.js';
 
+const CITY_CENTER = {
+  LAT: 35.68941,
+  LNG: 139.69201,
+};
+
 // Создаем и активируем карту
 const addressInput = document.querySelector('#address')
-const cityCenter = {
-  lat: 35.68941,
-  lng: 139.69201,
-};
 const map = L.map('map-canvas')
   .on('load', () => {
     setActiveForm();
     setActiveMapFilters();
-    addressInput.value = cityCenter.lat + ', ' + cityCenter.lng;
+    addressInput.value = CITY_CENTER.LAT + ', ' + CITY_CENTER.LNG;
   })
   .setView({
     // Координаты центра Токио
-    lat: cityCenter.lat,
-    lng: cityCenter.lng,
+    lat: CITY_CENTER.LAT,
+    lng: CITY_CENTER.LNG,
   }, 10);
 
 L.tileLayer(
@@ -41,8 +42,8 @@ const mainPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker({
-  lat: cityCenter.lat,
-  lng: cityCenter.lng,
+  lat: CITY_CENTER.LAT,
+  lng: CITY_CENTER.LNG,
 }, {
   draggable: true,
   icon: mainPinIcon,
