@@ -1,15 +1,15 @@
 // Модуль, отвечающий за генерацию разметки похожих элементов
-import {
+/*import {
   advertisementArray
-} from './data.js';
+} from './data.js';*/
 
 // Задаем константы для создания функций
-const ADV_NUMBER = 1; // число обявлений
+//const ADV_NUMBER = 1; // число объявлений
 const PHOTO_WIDTH = 45; // ширина фото (задана разметкой)
 const PHOTO_HEIGHT = 40; // высота фото (задана разметкой)
 const PHOTO_ALT = 'Фотография жилья'; // описание фото (задано разметкой)
 
-const popupListElement = document.querySelector('.map__canvas'); // обозначаем место для вставки скопированного шаблона
+//const popupListElement = document.querySelector('.map__canvas'); // обозначаем место для вставки скопированного шаблона
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup'); // выбираем шаблон
 
 // Создаем функцию для преобразования типа жилья
@@ -141,4 +141,6 @@ const getAdvFragment = (offer) => {
 };
 
 // Вставляем ОДНО объявление на сайт с помощью импортированной функции
-popupListElement.appendChild(getAdvFragment(advertisementArray[ADV_NUMBER]));
+//popupListElement.appendChild(getAdvFragment(advertisementArray[ADV_NUMBER]));
+
+export {getAdvFragment}
