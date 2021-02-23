@@ -28,6 +28,10 @@ titleInput.addEventListener('input', () => {
   titleInput.reportValidity();
 });
 
+// Валидация адреса (необходимо запретить ручное редактирование)
+const addressInput = document.querySelector('#address');
+addressInput.setAttribute('disabled', 'disabled');
+
 // Валидация цены за ночь
 const priceInput = document.querySelector('#price');
 
@@ -37,8 +41,9 @@ priceInput.addEventListener('input', () => {
   if (priceValue > MAX_PRICE) {
     priceInput.setCustomValidity('Максимальная цена за ночь составляет 1 000 000 руб.');
   } else {
-    priceInput.reportValidity();
+    priceInput.setCustomValidity('');
   }
+  priceInput.reportValidity();
 });
 
 titleInput.addEventListener('input', () => {
@@ -59,7 +64,7 @@ const flatTypeInput = document.querySelector('#type');
 const priceTypeInput = document.querySelector('#price');
 // По умолчанию выбрана квартира, меняем минимальную цену на 1000
 priceTypeInput.placeholder = 1000;
-flatTypeInput.addEventListener('change', () => {
+flatTypeInput.addEventListener('input', () => {
   priceTypeInput.placeholder = MIN_TYPE_PRICES[flatTypeInput.value];
 });
 
@@ -72,3 +77,70 @@ checkinTypeInput.addEventListener('change', () => {
 checkoutTypeInput.addEventListener('change', () => {
   checkinTypeInput.value = checkoutTypeInput.value;
 });
+
+// Валидация количества комнат и количества мест
+const roomNumberInput = document.querySelector('#room_number');
+const capacityInput = document.querySelector('#capacity');
+
+// По умолчанию 1 комната = 1 гость
+capacityInput.value = 1;
+capacityInput.options[0].setAttribute('disabled', 'disabled');
+capacityInput.options[2].setAttribute('selected', 'selected');
+capacityInput.options[1].setAttribute('disabled', 'disabled');
+capacityInput.options[3].setAttribute('disabled', 'disabled');
+
+roomNumberInput.addEventListener('change', () => {
+  const roomNumberValue = roomNumberInput.value;
+// 3 2 1 0
+  if (roomNumberValue === '1') {
+    capacityInput.options[0].removeAttribute('selected');
+    capacityInput.options[1].removeAttribute('selected');
+    capacityInput.options[2].removeAttribute('disabled');
+    capacityInput.options[3].removeAttribute('selected');
+    capacityInput.options[0].setAttribute('disabled', 'disabled');
+    capacityInput.options[1].setAttribute('disabled', 'disabled');
+    capacityInput.options[2].setAttribute('selected', 'selected');
+    capacityInput.options[3].setAttribute('disabled', 'disabled');
+  } else if (roomNumberValue === '2') {
+    capacityInput.options[0].removeAttribute('selected');
+    capacityInput.options[1].removeAttribute('disabled');
+    capacityInput.options[2].removeAttribute('selected');
+    capacityInput.options[2].removeAttribute('disabled');
+    capacityInput.options[3].removeAttribute('selected');
+    capacityInput.options[0].setAttribute('disabled', 'disabled');
+    capacityInput.options[1].setAttribute('selected', 'selected');
+    capacityInput.options[3].setAttribute('disabled', 'disabled');
+  } else if (roomNumberValue === '3') {
+    capacityInput.options[0].removeAttribute('disabled');
+    capacityInput.options[1].removeAttribute('selected');
+    capacityInput.options[1].removeAttribute('disabled');
+    capacityInput.options[2].removeAttribute('selected');
+    capacityInput.options[2].removeAttribute('disabled');
+    capacityInput.options[3].removeAttribute('selected');
+    capacityInput.options[0].setAttribute('selected', 'selected');
+    capacityInput.options[3].setAttribute('disabled', 'disabled');
+  } else if (roomNumberValue === '100') {
+    capacityInput.options[0].removeAttribute('selected');
+    capacityInput.options[1].removeAttribute('selected');
+    capacityInput.options[2].removeAttribute('selected');
+    capacityInput.options[3].removeAttribute('disabled');
+    capacityInput.options[0].setAttribute('disabled', 'disabled');
+    capacityInput.options[1].setAttribute('disabled', 'disabled');
+    capacityInput.options[2].setAttribute('disabled', 'disabled');
+    capacityInput.options[3].setAttribute('selected', 'selected');
+  } else {
+    capacityInput.options[0].removeAttribute('disabled');
+    capacityInput.options[1].removeAttribute('disabled');
+    capacityInput.options[2].removeAttribute('disabled');
+    capacityInput.options[3].removeAttribute('disabled');
+    capacityInput.options[0].removeAttribute('selected');
+    capacityInput.options[1].removeAttribute('selected');
+    capacityInput.options[2].removeAttribute('selected');
+    capacityInput.options[3].removeAttribute('selected');
+  }
+  capacityInput.reportValidity();
+});
+
+export {
+  addressInput
+};
