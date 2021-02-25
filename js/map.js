@@ -9,13 +9,15 @@ import {
   setActiveMapFilters
 } from './inactive-form.js';
 
+import {addressInput} from './restrictions.js';
+
 const CITY_CENTER = {
   LAT: 35.68941,
   LNG: 139.69201,
 };
 
 // Создаем и активируем карту
-const addressInput = document.querySelector('#address')
+//const addressInput = document.querySelector('#address')
 const map = L.map('map-canvas')
   .on('load', () => {
     setActiveForm();
