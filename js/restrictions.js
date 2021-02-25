@@ -82,64 +82,86 @@ checkoutTypeInput.addEventListener('change', () => {
 const roomNumberInput = document.querySelector('#room_number');
 const capacityInput = document.querySelector('#capacity');
 
-// По умолчанию 1 комната = 1 гость
+// по умолчанию 1 комната = 1 гость
 capacityInput.value = 1;
-capacityInput.options[0].setAttribute('disabled', 'disabled');
-capacityInput.options[2].setAttribute('selected', 'selected');
-capacityInput.options[1].setAttribute('disabled', 'disabled');
-capacityInput.options[3].setAttribute('disabled', 'disabled');
 
-roomNumberInput.addEventListener('change', () => {
-  const roomNumberValue = roomNumberInput.value;
-// 3 2 1 0
-  if (roomNumberValue === '1') {
-    capacityInput.options[0].removeAttribute('selected');
-    capacityInput.options[1].removeAttribute('selected');
-    capacityInput.options[2].removeAttribute('disabled');
-    capacityInput.options[3].removeAttribute('selected');
-    capacityInput.options[0].setAttribute('disabled', 'disabled');
-    capacityInput.options[1].setAttribute('disabled', 'disabled');
-    capacityInput.options[2].setAttribute('selected', 'selected');
-    capacityInput.options[3].setAttribute('disabled', 'disabled');
-  } else if (roomNumberValue === '2') {
-    capacityInput.options[0].removeAttribute('selected');
-    capacityInput.options[1].removeAttribute('disabled');
-    capacityInput.options[2].removeAttribute('selected');
-    capacityInput.options[2].removeAttribute('disabled');
-    capacityInput.options[3].removeAttribute('selected');
-    capacityInput.options[0].setAttribute('disabled', 'disabled');
-    capacityInput.options[1].setAttribute('selected', 'selected');
-    capacityInput.options[3].setAttribute('disabled', 'disabled');
-  } else if (roomNumberValue === '3') {
-    capacityInput.options[0].removeAttribute('disabled');
-    capacityInput.options[1].removeAttribute('selected');
-    capacityInput.options[1].removeAttribute('disabled');
-    capacityInput.options[2].removeAttribute('selected');
-    capacityInput.options[2].removeAttribute('disabled');
-    capacityInput.options[3].removeAttribute('selected');
-    capacityInput.options[0].setAttribute('selected', 'selected');
-    capacityInput.options[3].setAttribute('disabled', 'disabled');
-  } else if (roomNumberValue === '100') {
-    capacityInput.options[0].removeAttribute('selected');
-    capacityInput.options[1].removeAttribute('selected');
-    capacityInput.options[2].removeAttribute('selected');
-    capacityInput.options[3].removeAttribute('disabled');
-    capacityInput.options[0].setAttribute('disabled', 'disabled');
-    capacityInput.options[1].setAttribute('disabled', 'disabled');
-    capacityInput.options[2].setAttribute('disabled', 'disabled');
-    capacityInput.options[3].setAttribute('selected', 'selected');
-  } else {
-    capacityInput.options[0].removeAttribute('disabled');
-    capacityInput.options[1].removeAttribute('disabled');
-    capacityInput.options[2].removeAttribute('disabled');
-    capacityInput.options[3].removeAttribute('disabled');
-    capacityInput.options[0].removeAttribute('selected');
-    capacityInput.options[1].removeAttribute('selected');
-    capacityInput.options[2].removeAttribute('selected');
-    capacityInput.options[3].removeAttribute('selected');
+// Функция делает элемент недоступным
+const setDisabledValue = function (elements, values) {
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
+    if (values.indexOf(elements[i].value) > -1) {
+      elements[i].disabled = true;
+    }
   }
-  capacityInput.reportValidity();
-});
+};
+
+const calculateRoomsAndCapacity = function () {
+  const capacityOptions = capacityInput.querySelectorAll('option');
+  const roomsInputValue = roomNumberInput.value;
+
+  switch (roomsInputValue) {
+    case '1':
+      setDisabledValue(capacityOptions, ['0', '2', '3']);
+      capacityOptions[2].selected = true;
+      break;
+    case '2':
+      setDisabledValue(capacityOptions, ['0', '3']);
+      capacityOptions[1].selected = true;
+      break;
+    case '3':
+      setDisabledValue(capacityOptions, ['0']);
+      capacityOptions[0].selected = true;
+      break;
+    case '100':
+      setDisabledValue(capacityOptions, ['1', '2', '3']);
+      capacityOptions[3].selected = true;
+      break;
+  }
+};
+
+const roomsInputChangeHandler = function () {
+  calculateRoomsAndCapacity();
+};
+
+roomNumberInput.addEventListener('change', roomsInputChangeHandler);
+
+/*roomNumberInput.addEventListener('change', (evt) => {
+  switch (evt.target.value) {
+    case '1':
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[1].disabled = true;
+      capacityInput.options[2].disabled = false;
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[2].selected = true;
+      break;
+    case '2':
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[1].disabled = false;
+      capacityInput.options[2].disabled = false;
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[1].selected = true;
+      break;
+    case '3':
+      capacityInput.options[0].disabled = false;
+      capacityInput.options[1].disabled = false;
+      capacityInput.options[2].disabled = false;
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[0].selected = true;
+      break;
+    case '100':
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[1].disabled = true;
+      capacityInput.options[2].disabled = true;
+      capacityInput.options[3].disabled = false;
+      capacityInput.options[3].selected = true;
+      break;
+    default:
+      capacityInput.options[0].disabled = false;
+      capacityInput.options[1].disabled = false;
+      capacityInput.options[2].disabled = false;
+      capacityInput.options[3].disabled = false;
+  }
+});*/
 
 export {
   addressInput
