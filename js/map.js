@@ -1,15 +1,18 @@
 /* global L:readonly */
 // Модуль реализации карты
-import {getAdvFragment} from './card.js';
 import {
-  advertisementArray
-} from './data.js';
+  getAdvFragment
+} from './advertisements.js';
+
 import {
   setActiveForm,
   setActiveMapFilters
-} from './inactive-form.js';
+} from './user-form.js';
 
-import {addressInput} from './restrictions.js';
+import {
+  addressInput
+} from './restrictions.js';
+
 
 const CITY_CENTER = {
   LAT: 35.68941,
@@ -17,7 +20,6 @@ const CITY_CENTER = {
 };
 
 // Создаем и активируем карту
-//const addressInput = document.querySelector('#address')
 const map = L.map('map-canvas')
   .on('load', () => {
     setActiveForm();
@@ -59,31 +61,34 @@ mainPinMarker.on('move', (evt) => {
 });
 
 // Добавляем метки из массива
-advertisementArray.forEach((adv) => {
-  const lat = adv.x;
-  const lng = adv.y;
+const createPins = (data) => {
+  data.forEach((adv) => {
+    const lat = adv.location.lat;
+    const lng = adv.location.lng;
 
-  const pinIcon = L.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    const pinIcon = L.icon({
+      iconUrl: './img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+
+    const pinMarker = L.marker({
+      lat,
+      lng,
+    }, {
+      pinIcon,
+    });
+
+    pinMarker
+      .addTo(map)
+      // привязываем балун
+      .bindPopup(
+        // передаем функцию генерации массива из объявлений
+        getAdvFragment(adv), {
+          keepInView: true,
+        },
+      );
   });
+}
 
-  const pinMarker = L.marker({
-    lat,
-    lng,
-  }, {
-    pinIcon,
-  });
-
-  pinMarker
-    .addTo(map)
-    // привязываем балун
-    .bindPopup(
-      // передаем функцию генерации массива из объявлений
-      getAdvFragment(adv),
-      {
-        keepInView: true,
-      },
-    );
-});
+export {createPins, mainPinMarker, CITY_CENTER}

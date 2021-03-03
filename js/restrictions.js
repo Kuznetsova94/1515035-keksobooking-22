@@ -125,44 +125,6 @@ const roomsInputChangeHandler = function () {
 
 roomNumberInput.addEventListener('change', roomsInputChangeHandler);
 
-/*roomNumberInput.addEventListener('change', (evt) => {
-  switch (evt.target.value) {
-    case '1':
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[1].disabled = true;
-      capacityInput.options[2].disabled = false;
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[2].selected = true;
-      break;
-    case '2':
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[1].disabled = false;
-      capacityInput.options[2].disabled = false;
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[1].selected = true;
-      break;
-    case '3':
-      capacityInput.options[0].disabled = false;
-      capacityInput.options[1].disabled = false;
-      capacityInput.options[2].disabled = false;
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[0].selected = true;
-      break;
-    case '100':
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[1].disabled = true;
-      capacityInput.options[2].disabled = true;
-      capacityInput.options[3].disabled = false;
-      capacityInput.options[3].selected = true;
-      break;
-    default:
-      capacityInput.options[0].disabled = false;
-      capacityInput.options[1].disabled = false;
-      capacityInput.options[2].disabled = false;
-      capacityInput.options[3].disabled = false;
-  }
-});*/
-
 export {
   addressInput
 };

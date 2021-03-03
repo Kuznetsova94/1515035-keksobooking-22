@@ -1,9 +1,10 @@
-// Модуль переводит страницу в неактивное состояние
+// Модуль работает с состояниями формы
 const advForm = document.querySelector('.ad-form');
 const headerForm = document.querySelector('.ad-form-header');
 const advElementForm = document.querySelectorAll('.ad-form__element');
-const mapFilters = document.querySelectorAll('.map__filters')
-const mapFeatures = document.querySelector('.map__features')
+const mapFilters = document.querySelectorAll('.map__filters');
+const mapFeatures = document.querySelector('.map__features');
+
 
 // Функция делает .ad-form неактивным полем
 const setInactiveForm = () => {
@@ -43,6 +44,8 @@ setInactiveForm();
 setInactiveMapFilters();
 
 export {
+  advForm,
+  mapFilters,
   setActiveForm,
   setActiveMapFilters
 }
