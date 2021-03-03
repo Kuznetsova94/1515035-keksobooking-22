@@ -1,5 +1,5 @@
 // Модуль описывает взаиможействие с сервером
-// Получаем данные с сервера
+
 const getData = (onSuccess, onFail) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((response) => {
@@ -14,9 +14,8 @@ const getData = (onSuccess, onFail) => {
     .catch(() => {
       onFail('Не удалось получить данные с сервера. Попробуйте ещё раз');
     });
-};
+}
 
-// Создаем сообщение об ошибке запроса
 const sendData = (onSuccess, onFail, body) => {
   fetch('https://22.javascript.pages.academy/keksobooking',
     {
@@ -34,7 +33,7 @@ const sendData = (onSuccess, onFail, body) => {
     .catch(() => {
       onFail();
     });
-};
+}
 
 export {
   getData,

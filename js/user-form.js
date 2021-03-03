@@ -45,6 +45,7 @@ setInactiveMapFilters();
 
 export {
   advForm,
+  mapFilters,
   setActiveForm,
   setActiveMapFilters
 }

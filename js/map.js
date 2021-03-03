@@ -5,10 +5,6 @@ import {
 } from './advertisements.js';
 
 import {
-  getData
-} from './api.js';
-
-import {
   setActiveForm,
   setActiveMapFilters
 } from './user-form.js';
@@ -17,9 +13,6 @@ import {
   addressInput
 } from './restrictions.js';
 
-/*import {
-  showAlert
-} from './send-form.js'*/
 
 const CITY_CENTER = {
   LAT: 35.68941,
@@ -68,9 +61,11 @@ mainPinMarker.on('move', (evt) => {
 });
 
 // Добавляем метки из массива
-//СГЕНЕРИРОВАННОГО СЕРВЕРОМ
-getData((advertisements) => {
-  advertisements.forEach((advertisement) => {
+const createPins = (data) => {
+  data.forEach((adv) => {
+    const lat = adv.location.lat;
+    const lng = adv.location.lng;
+
     const pinIcon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -78,8 +73,8 @@ getData((advertisements) => {
     });
 
     const pinMarker = L.marker({
-      lat: advertisement.location.lat,
-      lng: advertisement.location.lng,
+      lat,
+      lng,
     }, {
       pinIcon,
     });
@@ -89,10 +84,11 @@ getData((advertisements) => {
       // привязываем балун
       .bindPopup(
         // передаем функцию генерации массива из объявлений
-        //СГЕНЕРИРОВАННОГО СЕРВЕРОМ
-        getAdvFragment(advertisements), {
+        getAdvFragment(adv), {
           keepInView: true,
         },
       );
   });
-});
+}
+
+export {createPins, mainPinMarker, CITY_CENTER}

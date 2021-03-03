@@ -1,5 +1,10 @@
 // Модуль для создания объекта из массива данных
-import {getRandomIntegerInclusive, getRandomItemNoRepeat, getRandomArray, getRandomFloat} from './utils.js';
+import {
+  getRandomIntegerInclusive,
+  getRandomItemNoRepeat,
+  getRandomArray,
+  getRandomFloat
+} from './utils.js';
 
 //Создаем массивы для создания объекта
 const OFFER_TYPES = ['palace', 'flat', 'house', 'bungalow'];
@@ -53,7 +58,12 @@ const createObj = () => {
 // Объединяем 10 объектов в массив
 const advertisementArray = new Array(OBJECT_NUMBER).fill(null).map(() => createObj());
 
+/*const getAdvArray = (data) => {
+  return data.map(createObj)
+}*/
 // eslint-disable-next-line no-console
-//console.log(advertisementArray);
+//console.log(getAdvArray);
 
-export {advertisementArray};
+export {
+  advertisementArray
+};
