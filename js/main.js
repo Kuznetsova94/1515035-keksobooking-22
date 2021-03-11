@@ -1,6 +1,6 @@
 /* global _:readonly */
-
 import {getData} from './api.js';
+import './avatar.js';
 //import './advertisements.js';
 import {
   setFilterChange
