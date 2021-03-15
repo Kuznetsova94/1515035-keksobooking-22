@@ -58,12 +58,6 @@ const createObj = () => {
 // Объединяем 10 объектов в массив
 const advertisementArray = new Array(OBJECT_NUMBER).fill(null).map(() => createObj());
 
-/*const getAdvArray = (data) => {
-  return data.map(createObj)
-}*/
-// eslint-disable-next-line no-console
-//console.log(getAdvArray);
-
 export {
   advertisementArray
 };

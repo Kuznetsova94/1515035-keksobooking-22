@@ -86,7 +86,7 @@ const capacityInput = document.querySelector('#capacity');
 capacityInput.value = 1;
 
 // Функция делает элемент недоступным
-const setDisabledValue = function (elements, values) {
+const setDisabledValue = (elements, values) => {
   for (let i = 0; i < elements.length; i++) {
     elements[i].disabled = false;
     if (values.indexOf(elements[i].value) > -1) {
@@ -95,7 +95,7 @@ const setDisabledValue = function (elements, values) {
   }
 };
 
-const calculateRoomsAndCapacity = function () {
+const calculateRoomsAndCapacity = () => {
   const capacityOptions = capacityInput.querySelectorAll('option');
   const roomsInputValue = roomNumberInput.value;
 
@@ -119,7 +119,7 @@ const calculateRoomsAndCapacity = function () {
   }
 };
 
-const roomsInputChangeHandler = function () {
+const roomsInputChangeHandler = () => {
   calculateRoomsAndCapacity();
 };
 

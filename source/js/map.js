@@ -66,16 +66,12 @@ const mainPinMarker = L.marker({
   draggable: true,
   icon: mainPinIcon,
 });
-// добавляем главную иконку пина на карту
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('move', (evt) => {
-  // при перемещении пина меняем значение адреса и округляем до 5 цифр после точки!
   addressInput.value = evt.target.getLatLng().lat.toFixed(5) + ', ' + evt.target.getLatLng().lng.toFixed(5);
 });
 
-
-// Добавляем метки из массива
 const createPins = (data) => {
   data
     .slice()
@@ -100,9 +96,7 @@ const createPins = (data) => {
 
       pinMarker
         .addTo(map)
-        // привязываем балун
         .bindPopup(
-          // передаем функцию генерации массива из объявлений
           getAdvFragment(adv), {
             keepInView: true,
           },

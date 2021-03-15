@@ -1,64 +1,62 @@
 // Модуль реализации загрузки изображений
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const MAX_PHOTOS = 8;
+const PHOTOS = ['jpg', 'jpeg', 'png', 'gif'];
+const IMAGE_WIDTH = 70;
+const IMAGE_HEIGHT = 70;
 
-const avatarChooser = document.querySelector('#avatar');
-const avatarPreview = document.querySelector('.ad-form-header__preview');
-const avatar = avatarPreview.querySelector('img');
+const photoContainerElement = document.querySelector('.ad-form__photo');
+const avatarUploadElement = document.querySelector('.ad-form__field input[type=file]');
+const ImageInputElement = document.querySelector('.ad-form-header__preview img');
+const photoUploadElement = document.querySelector('.ad-form__upload input[type=file]');
 
-const photoChooser = document.querySelector('#images');
-const photoPreview = document.querySelector('.ad-form__photo');
-
-// Общая проверка на окончание
-const matches = (fileName) => {
-  FILE_TYPES.some((it) => {
-    return fileName.endsWith(it);
+avatarUploadElement.addEventListener('change', () => {
+  const file = avatarUploadElement.files[0];
+  const fileNameElement = file.name.toLowerCase();
+  const matches = PHOTOS.some((item) => {
+    return fileNameElement.endsWith(item);
   });
+
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      ImageInputElement.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  }
+});
+
+const addImage = (source) => {
+  const imageElement = document.createElement('img');
+  imageElement.alt = 'Фотография жилья';
+  imageElement.src = source;
+  imageElement.width = IMAGE_WIDTH;
+  imageElement.draggable = true;
+  imageElement.height = IMAGE_HEIGHT;
+  imageElement.style.margin = '2px';
+  photoContainerElement.style.display = 'flex';
+  photoContainerElement.style.justifyContent = 'space-around';
+  photoContainerElement.style.alignItems = 'center';
+  photoContainerElement.style.width = 'auto';
+  photoContainerElement.appendChild(imageElement);
 };
 
-// Функция загрузки аватара
-const loadAvatar = () => {
-  avatarChooser.addEventListener('change', () => {
-    const file = avatarChooser.files[0];
-    const fileName = file.name.toLowerCase();
+photoUploadElement.addEventListener('change', () => {
+  const photos = document.querySelectorAll('.ad-form__photo img').length;
+  if (photos !== null && photos < MAX_PHOTOS) {
 
-    if (matches(fileName)) {
+    const images = photoUploadElement.files[0];
+    const fileNameElement = images.name.toLowerCase();
+
+    const matches = PHOTOS.some((item) => {
+      return fileNameElement.endsWith(item);
+    });
+
+    if (matches) {
       const reader = new FileReader();
-
       reader.addEventListener('load', () => {
-        avatar.src = reader.result;
+        addImage(reader.result);
       });
-
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(images);
     }
-  });
-};
-
-// Функция загрузки аватара
-const loadPhoto = () => {
-  photoChooser.addEventListener('change', () => {
-    const file = photoChooser.files[0];
-    const fileName = file.name.toLowerCase();
-
-    if (matches(fileName)) {
-      const reader = new FileReader();
-      // Создаем новый div с img для новой фотографии
-      const photoContainer = photoPreview.cloneNode(true);
-      const newPhoto = document.createElement('img');
-
-      photoContainer.appendChild(newPhoto);
-      photoContainer.appendChild(photoContainer);
-      photoPreview.remove();
-
-      reader.addEventListener('load', () => {
-        newPhoto.src = reader.result;
-        newPhoto.style.width = '45px';
-        newPhoto.style.height = '40px';
-      });
-
-      reader.readAsDataURL(file);
-    }
-  });
-}
-
-loadAvatar();
-loadPhoto();
+  }
+});

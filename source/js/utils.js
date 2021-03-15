@@ -1,5 +1,4 @@
 // Модуль для создания функций
-
 const ALERT_SHOW_TIME = 5000;
 // Функция для генерации случайного числа
 const getRandomIntegerInclusive = (min, max) => {
@@ -10,11 +9,11 @@ const getRandomIntegerInclusive = (min, max) => {
 }
 
 // Функция для генерации случайного уникального элемента из массива
-const getRandomValue = function (min, max) {
+const getRandomValue = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-const getRandomItemNoRepeat = function (arr) {
+const getRandomItemNoRepeat = (arr) => {
   const randomElement = getRandomValue(0, arr.length - 1);
   const randomElementItem = arr[randomElement];
   arr.slice(randomElement, 1);
@@ -22,7 +21,7 @@ const getRandomItemNoRepeat = function (arr) {
 };
 
 // Функция для генерации случайного количества случайных уникальных элементов из массива
-const getRandomArray = function (array) {
+const getRandomArray = (array) => {
   let newArray = [];
   array.forEach((element) => {
     if (getRandomValue(0, 1)) {
@@ -34,7 +33,7 @@ const getRandomArray = function (array) {
 }
 
 // Функция для генерации случайного числа с плавающей точкой
-const getRandomFloat = function (min, max, digits) {
+const getRandomFloat = (min, max, digits) => {
   if (min >= 0 && max >= 0 && max > min) {
     let num = Math.random() * (max - min) + min;
     return +(num.toFixed(digits));
