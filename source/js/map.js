@@ -1,21 +1,30 @@
-/* global L:readonly */
 // Модуль реализации карты
+import {
+  getData
+} from './api.js';
 import {
   getAdvFragment
 } from './advertisements.js';
-
+import {
+  getFilters,
+  setFilterChange
+} from './filter.js'
+import L from 'leaflet';
+import _ from 'lodash';
 import {
   setActiveForm,
   setActiveMapFilters
 } from './user-form.js';
-
+import {
+  setUserFormSubmit
+} from './send-form.js';
 import {
   addressInput
 } from './restrictions.js';
-
 import {
-  getFilters
-} from './filter.js'
+  showAlert
+} from './utils.js';
+
 
 const ADVERTISEMENTS_NUMBER = 10;
 
@@ -45,7 +54,7 @@ L.tileLayer(
 
 // Добавляем главную метку
 const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [48, 48],
   iconAnchor: [24, 48],
 });
@@ -77,7 +86,7 @@ const createPins = (data) => {
       const lng = adv.location.lng;
 
       const pinIcon = L.icon({
-        iconUrl: './img/pin.svg',
+        iconUrl: 'img/pin.svg',
         iconSize: [40, 40],
         iconAnchor: [20, 40],
       });
@@ -100,6 +109,17 @@ const createPins = (data) => {
         );
     });
 }
+
+const RERENDER_DELAY = 500;
+
+getData((data) => {
+  createPins(data);
+  setFilterChange(_.debounce(
+    () => createPins(data), RERENDER_DELAY));
+}, showAlert);
+
+setUserFormSubmit();
+
 
 export {
   createPins,
