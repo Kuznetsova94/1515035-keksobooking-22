@@ -1,5 +1,4 @@
 // Модуль описывает взаиможействие с сервером
-
 const getData = (onSuccess, onFail) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((response) => {
@@ -21,14 +20,12 @@ const sendData = (onSuccess, onFail, body) => {
     {
       method: 'POST',
       body,
-    },
-  )
+    } )
     .then((response) => {
       if (response.ok) {
         onSuccess();
-      } else {
-        onFail();
       }
+      onFail();
     })
     .catch(() => {
       onFail();

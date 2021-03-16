@@ -1,6 +1,11 @@
+// Модуль создает сообщения при отправке формы
 import {
   sendData
 } from './api.js';
+
+import {
+  cleanPhoto
+} from './avatar.js';
 
 import {
   mainPinMarker,
@@ -12,23 +17,22 @@ import {
 } from './restrictions.js';
 
 import {
-  advForm
+  advertisementForm
 } from './user-form.js';
 
 import {
   isEscEvent
 } from './utils.js';
 
-// Модуль создает сообщения при отправке формы
-const mainElement = document.querySelector('.main'); // обозначаем место для вставки скопированного шаблона
-const successTemplate = document.querySelector('#success').content.querySelector('.success'); // получаем доступ к шаблону с успешной отправкой
+const mainElement = document.querySelector('.main');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const successMessage = successTemplate.cloneNode(true);
-const errorTemplate = document.querySelector('#error').content.querySelector('.error'); // получаем доступ к шаблону с ошибкой
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const errorMessage = errorTemplate.cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 const mapFilter = document.querySelector('.map__filters');
 
-// Добавляю сообщения в разметку + скрываю сообщения с помощью класса hidden
+
 mainElement.append(successMessage);
 mainElement.append(errorMessage);
 successMessage.classList.add('hidden');
@@ -60,13 +64,14 @@ const openMessage = (message) => {
 
 // Функция сбрасывает введенные значения
 const resetForm = () => {
-  advForm.reset();
+  advertisementForm.reset();
   mapFilter.reset();
   mainPinMarker.setLatLng({
     lat: CITY_CENTER.LAT,
     lng: CITY_CENTER.LNG,
   });
   addressInput.value = CITY_CENTER.LAT + ', ' + CITY_CENTER.LNG;
+  cleanPhoto();
 };
 
 resetButton.addEventListener('click', (evt) => {
@@ -75,7 +80,7 @@ resetButton.addEventListener('click', (evt) => {
 });
 
 const setUserFormSubmit = () => {
-  advForm.addEventListener('submit', (evt) => {
+  advertisementForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
       () => {

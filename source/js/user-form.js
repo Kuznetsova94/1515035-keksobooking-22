@@ -1,26 +1,25 @@
 // Модуль работает с состояниями формы
-const advForm = document.querySelector('.ad-form');
+const advertisementForm = document.querySelector('.ad-form');
 const headerForm = document.querySelector('.ad-form-header');
-const advElementForm = document.querySelectorAll('.ad-form__element');
+const advertisementElementForm = document.querySelectorAll('.ad-form__element');
 const mapFilters = document.querySelectorAll('.map__filters');
 const mapFeatures = document.querySelector('.map__features');
 
-
 // Функция делает .ad-form неактивным полем
 const setInactiveForm = () => {
-  advElementForm.forEach((formElement) => {
+  advertisementElementForm.forEach((formElement) => {
     formElement.setAttribute('disabled', 'disabled');
   });
-  advForm.classList.add('ad-form--disabled');
+  advertisementForm.classList.add('ad-form--disabled');
   headerForm.setAttribute('disabled', 'disabled');
 };
 
 // Функция возвращает .ad-form в активное состояние
 const setActiveForm = () => {
-  advElementForm.forEach((formElement) => {
+  advertisementElementForm.forEach((formElement) => {
     formElement.removeAttribute('disabled');
   });
-  advForm.classList.remove('ad-form--disabled');
+  advertisementForm.classList.remove('ad-form--disabled');
   headerForm.removeAttribute('disabled');
 };
 
@@ -44,7 +43,7 @@ setInactiveForm();
 setInactiveMapFilters();
 
 export {
-  advForm,
+  advertisementForm,
   mapFilters,
   setActiveForm,
   setActiveMapFilters

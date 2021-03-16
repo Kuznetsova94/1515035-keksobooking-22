@@ -1,21 +1,31 @@
-/* global L:readonly */
 // Модуль реализации карты
 import {
-  getAdvFragment
+  getData
+} from './api.js';
+import {
+  getAdvertisementFragment
 } from './advertisements.js';
-
+import {
+  getFilters,
+  setFilterChange,
+  setFilterReset
+} from './filter.js'
+import L from 'leaflet';
+import _ from 'lodash';
 import {
   setActiveForm,
   setActiveMapFilters
 } from './user-form.js';
-
+import {
+  setUserFormSubmit
+} from './send-form.js';
 import {
   addressInput
 } from './restrictions.js';
-
 import {
-  getFilters
-} from './filter.js'
+  showAlert
+} from './utils.js';
+
 
 const ADVERTISEMENTS_NUMBER = 10;
 
@@ -23,6 +33,8 @@ const CITY_CENTER = {
   LAT: 35.68941,
   LNG: 139.69201,
 };
+
+const RERENDER_DELAY = 500;
 
 // Создаем и активируем карту
 const map = L.map('map-canvas')
@@ -45,7 +57,7 @@ L.tileLayer(
 
 // Добавляем главную метку
 const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [48, 48],
   iconAnchor: [24, 48],
 });
@@ -57,27 +69,23 @@ const mainPinMarker = L.marker({
   draggable: true,
   icon: mainPinIcon,
 });
-// добавляем главную иконку пина на карту
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('move', (evt) => {
-  // при перемещении пина меняем значение адреса и округляем до 5 цифр после точки!
   addressInput.value = evt.target.getLatLng().lat.toFixed(5) + ', ' + evt.target.getLatLng().lng.toFixed(5);
 });
 
-
-// Добавляем метки из массива
 const createPins = (data) => {
   data
     .slice()
     .filter(getFilters)
     .slice(0, ADVERTISEMENTS_NUMBER)
-    .forEach((adv) => {
-      const lat = adv.location.lat;
-      const lng = adv.location.lng;
+    .forEach((advertisement) => {
+      const lat = advertisement.location.lat;
+      const lng = advertisement.location.lng;
 
       const pinIcon = L.icon({
-        iconUrl: './img/pin.svg',
+        iconUrl: 'img/pin.svg',
         iconSize: [40, 40],
         iconAnchor: [20, 40],
       });
@@ -91,15 +99,22 @@ const createPins = (data) => {
 
       pinMarker
         .addTo(map)
-        // привязываем балун
         .bindPopup(
-          // передаем функцию генерации массива из объявлений
-          getAdvFragment(adv), {
+          getAdvertisementFragment(advertisement), {
             keepInView: true,
           },
         );
     });
 }
+
+getData((data) => {
+  createPins(data);
+  setFilterReset(() => createPins(data));
+  setFilterChange(_.debounce(
+    () => createPins(data), RERENDER_DELAY));
+}, showAlert);
+
+setUserFormSubmit();
 
 export {
   createPins,
