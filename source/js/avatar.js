@@ -60,3 +60,11 @@ photoUploadElement.addEventListener('change', () => {
     }
   }
 });
+
+// Функция для очистки полей с фотографиями
+const cleanPhoto = () => {
+  ImageInputElement.src = 'img/muffin-grey.svg';
+  photoContainerElement.innerHTML = '';
+};
+
+export {cleanPhoto};

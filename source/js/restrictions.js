@@ -1,11 +1,8 @@
 // Модуль, который описывает ограничения (задание 5.2)
-// Ограничения по длине заголовка
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-// Ограничения по цене за ночь
 const MAX_PRICE = 1000000;
-// Ограничения минимальной цены по типу жилья
-const MIN_TYPE_PRICES = {
+const MIN_TYPE_PRICE = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -65,7 +62,7 @@ const priceTypeInput = document.querySelector('#price');
 // По умолчанию выбрана квартира, меняем минимальную цену на 1000
 priceTypeInput.placeholder = 1000;
 flatTypeInput.addEventListener('input', () => {
-  priceTypeInput.placeholder = MIN_TYPE_PRICES[flatTypeInput.value];
+  priceTypeInput.placeholder = MIN_TYPE_PRICE[flatTypeInput.value];
 });
 
 // Синхранизация по времени
@@ -81,9 +78,6 @@ checkoutTypeInput.addEventListener('change', () => {
 // Валидация количества комнат и количества мест
 const roomNumberInput = document.querySelector('#room_number');
 const capacityInput = document.querySelector('#capacity');
-
-// по умолчанию 1 комната = 1 гость
-capacityInput.value = 1;
 
 // Функция делает элемент недоступным
 const setDisabledValue = (elements, values) => {

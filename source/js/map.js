@@ -3,11 +3,12 @@ import {
   getData
 } from './api.js';
 import {
-  getAdvFragment
+  getAdvertisementFragment
 } from './advertisements.js';
 import {
   getFilters,
-  setFilterChange
+  setFilterChange,
+  setFilterReset
 } from './filter.js'
 import L from 'leaflet';
 import _ from 'lodash';
@@ -32,6 +33,8 @@ const CITY_CENTER = {
   LAT: 35.68941,
   LNG: 139.69201,
 };
+
+const RERENDER_DELAY = 500;
 
 // Создаем и активируем карту
 const map = L.map('map-canvas')
@@ -77,9 +80,9 @@ const createPins = (data) => {
     .slice()
     .filter(getFilters)
     .slice(0, ADVERTISEMENTS_NUMBER)
-    .forEach((adv) => {
-      const lat = adv.location.lat;
-      const lng = adv.location.lng;
+    .forEach((advertisement) => {
+      const lat = advertisement.location.lat;
+      const lng = advertisement.location.lng;
 
       const pinIcon = L.icon({
         iconUrl: 'img/pin.svg',
@@ -97,23 +100,21 @@ const createPins = (data) => {
       pinMarker
         .addTo(map)
         .bindPopup(
-          getAdvFragment(adv), {
+          getAdvertisementFragment(advertisement), {
             keepInView: true,
           },
         );
     });
 }
 
-const RERENDER_DELAY = 500;
-
 getData((data) => {
   createPins(data);
+  setFilterReset(() => createPins(data));
   setFilterChange(_.debounce(
     () => createPins(data), RERENDER_DELAY));
 }, showAlert);
 
 setUserFormSubmit();
-
 
 export {
   createPins,

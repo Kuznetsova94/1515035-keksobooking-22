@@ -1,5 +1,4 @@
 // Модуль описывает взаиможействие с сервером
-
 const getData = (onSuccess, onFail) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((response) => {

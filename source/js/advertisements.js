@@ -1,9 +1,7 @@
 // Модуль, отвечающий за генерацию разметки похожих объявлений
-
-// Задаем константы для создания функций
-const PHOTO_WIDTH = 45; // ширина фото (задана разметкой)
-const PHOTO_HEIGHT = 40; // высота фото (задана разметкой)
-const PHOTO_ALT = 'Фотография жилья'; // описание фото (задано разметкой)
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
+const PHOTO_ALT = 'Фотография жилья';
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -24,7 +22,7 @@ const getFlatType = (flatType) => {
 }
 
 // Создаем функцию для генерации объявления
-const getAdvFragment = (advs) => {
+const getAdvertisementFragment = (advertisements) => {
   const popupElement = popupTemplate.cloneNode(true);
   const popupFeatures = popupElement.querySelector('.popup__features');
   const popupPhotos = popupElement.querySelector('.popup__photos');
@@ -33,9 +31,9 @@ const getAdvFragment = (advs) => {
   // Создаем функцию для преобразования массива из названия удобств в символы
   const getFeaturesFragment = () => {
     popupFeatures.innerHTML = '';
-    advs.offer.features.forEach((item, i) => {
+    advertisements.offer.features.forEach((item, i) => {
       const feature = document.createElement('li');
-      feature.classList.add('popup__feature', 'popup__feature--' + advs.offer.features[i]);
+      feature.classList.add('popup__feature', 'popup__feature--' + advertisements.offer.features[i]);
       popupFeatures.appendChild(feature);
     });
   };
@@ -43,8 +41,8 @@ const getAdvFragment = (advs) => {
   // Создаем функцию для преобразования массива из адресов изображений в формат разметки
   const getPhotosFragment = () => {
     popupPhotos.innerHTML = '';
-    advs.offer.photos.forEach((item, i) => {
-      photo.src = advs.offer.photos[i];
+    advertisements.offer.photos.forEach((item, i) => {
+      photo.src = advertisements.offer.photos[i];
       photo.style.width = PHOTO_WIDTH;
       photo.style.height = PHOTO_HEIGHT;
       photo.alt = PHOTO_ALT;
@@ -52,58 +50,58 @@ const getAdvFragment = (advs) => {
     })
   }
 
-  if (advs.offer.title) {
-    popupElement.querySelector('.popup__title').textContent = advs.offer.title; // выводим заголовок объявления
+  if (advertisements.offer.title) {
+    popupElement.querySelector('.popup__title').textContent = advertisements.offer.title;
   } else {
     popupElement.querySelector('.popup__title').remove();
   }
 
-  if (advs.offer.address) {
-    popupElement.querySelector('.popup__text--address').textContent = advs.offer.address; // выводим заголовок объявления
+  if (advertisements.offer.address) {
+    popupElement.querySelector('.popup__text--address').textContent = advertisements.offer.address;
   } else {
     popupElement.querySelector('.popup__text--address').remove();
   }
 
-  if (advs.offer.price) {
-    popupElement.querySelector('.popup__text--price').textContent = advs.offer.price + ' ₽/ночь';
+  if (advertisements.offer.price) {
+    popupElement.querySelector('.popup__text--price').textContent = advertisements.offer.price + ' ₽/ночь';
   } else {
     popupElement.querySelector('.popup__text--price').remove();
   }
 
-  if (advs.offer.type) {
-    popupElement.querySelector('.popup__type').textContent = getFlatType(advs.offer.type);
+  if (advertisements.offer.type) {
+    popupElement.querySelector('.popup__type').textContent = getFlatType(advertisements.offer.type);
   } else {
     popupElement.querySelector('.popup__type').remove();
   }
 
-  if (advs.offer.rooms && advs.offer.guests) {
-    popupElement.querySelector('.popup__text--capacity').textContent = advs.offer.rooms + ' комнаты для ' + advs.offer.guests + ' гостей'; // выводим количество комнат и гостей
-  } else if (advs.offer.rooms) {
-    popupElement.querySelector('.popup__text--capacity').textContent = advs.offer.rooms + ' комнаты'; // выводим количество комнат
-  } else if (advs.offer.guests) {
-    popupElement.querySelector('.popup__text--capacity').textContent = 'для ' + advs.offer.guests + ' гостей'; // выводим количество гостей
+  if (advertisements.offer.rooms && advertisements.offer.guests) {
+    popupElement.querySelector('.popup__text--capacity').textContent = advertisements.offer.rooms + ' комнаты для ' + advertisements.offer.guests + ' гостей';
+  } else if (advertisements.offer.rooms) {
+    popupElement.querySelector('.popup__text--capacity').textContent = advertisements.offer.rooms + ' комнаты';
+  } else if (advertisements.offer.guests) {
+    popupElement.querySelector('.popup__text--capacity').textContent = 'для ' + advertisements.offer.guests + ' гостей';
   } else {
     popupElement.querySelector('.popup__text--capacity').remove();
   }
 
-  if (advs.offer.checkinTime && advs.offer.checkoutTime) {
-    popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advs.offer.checkinTime + ', выезд до ' + advs.offer.checkoutTime; // выводим время выезда и заезда
-  } else if (advs.offer.checkinTime) {
-    popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advs.offer.checkinTime; // выводим время заезда
-  } else if (advs.offer.checkoutTime) {
-    popupElement.querySelector('.popup__text--time').textContent = 'Выезд до ' + advs.offer.checkoutTime; // выводим время выезда
+  if (advertisements.offer.checkinTime && advertisements.offer.checkoutTime) {
+    popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisements.offer.checkinTime + ', выезд до ' + advertisements.offer.checkoutTime;
+  } else if (advertisements.offer.checkinTime) {
+    popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisements.offer.checkinTime;
+  } else if (advertisements.offer.checkoutTime) {
+    popupElement.querySelector('.popup__text--time').textContent = 'Выезд до ' + advertisements.offer.checkoutTime;
   } else {
     popupElement.querySelector('.popup__text--time').remove();
   }
 
-  if (advs.offer.description) {
-    popupElement.querySelector('.popup__description').textContent = advs.offer.description;
+  if (advertisements.offer.description) {
+    popupElement.querySelector('.popup__description').textContent = advertisements.offer.description;
   } else {
     popupElement.querySelector('.popup__description').remove();
   }
 
-  if (advs.author.avatar) {
-    popupElement.querySelector('.popup__avatar').src = advs.author.avatar;
+  if (advertisements.author.avatar) {
+    popupElement.querySelector('.popup__avatar').src = advertisements.author.avatar;
   } else {
     popupElement.querySelector('.popup__avatar').remove();
   }
@@ -111,10 +109,9 @@ const getAdvFragment = (advs) => {
   getPhotosFragment();
   getFeaturesFragment();
 
-
   return popupElement;
 };
 
 export {
-  getAdvFragment
+  getAdvertisementFragment
 }
