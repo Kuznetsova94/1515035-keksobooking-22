@@ -1,13 +1,18 @@
 // Модуль, который описывает ограничения (задание 5.2)
 const MIN_TITLE_LENGTH = 30;
+
 const MAX_TITLE_LENGTH = 100;
+
 const MAX_PRICE = 1000000;
+
 const MIN_TYPE_PRICE = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
   palace: 10000,
 };
+
+const ROOM_CAPACITIES = ['1', '2', '3', '100'];
 
 // Валидация заголовка
 const titleInput = document.querySelector('#title');
@@ -82,10 +87,7 @@ const capacityInput = document.querySelector('#capacity');
 // Функция делает элемент недоступным
 const setDisabledValue = (elements, values) => {
   for (let i = 0; i < elements.length; i++) {
-    elements[i].disabled = false;
-    if (values.indexOf(elements[i].value) > -1) {
-      elements[i].disabled = true;
-    }
+    elements[i].disabled = values.indexOf(elements[i].value) > -1
   }
 };
 
@@ -94,19 +96,19 @@ const calculateRoomsAndCapacity = () => {
   const roomsInputValue = roomNumberInput.value;
 
   switch (roomsInputValue) {
-    case '1':
+    case ROOM_CAPACITIES[0]:
       setDisabledValue(capacityOptions, ['0', '2', '3']);
       capacityOptions[2].selected = true;
       break;
-    case '2':
+    case ROOM_CAPACITIES[1]:
       setDisabledValue(capacityOptions, ['0', '3']);
       capacityOptions[1].selected = true;
       break;
-    case '3':
+    case ROOM_CAPACITIES[2]:
       setDisabledValue(capacityOptions, ['0']);
       capacityOptions[0].selected = true;
       break;
-    case '100':
+    case ROOM_CAPACITIES[3]:
       setDisabledValue(capacityOptions, ['1', '2', '3']);
       capacityOptions[3].selected = true;
       break;
